@@ -1,0 +1,18 @@
+{
+  "name": "react-native-numbers-scene",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./public/index.html",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Ryky CE",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "typescript": "^5.3.3"
+  }
+}
