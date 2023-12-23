@@ -28,3 +28,8 @@
   }
 
 }
+
+@font-face {
+  font-family: comfortaa;
+  src: url( './comfortaa.ttf' );
+}
