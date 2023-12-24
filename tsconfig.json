@@ -8,6 +8,7 @@
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,                        
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "removeComments": true,
   }
 }
