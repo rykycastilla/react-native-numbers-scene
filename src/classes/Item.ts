@@ -1,4 +1,7 @@
 import Axis from '../enums/Axis.js'
+import Board from '../classes/Board'
+import Direction from '../enums/SpacialDirection.js'
+import moveAnimation from '../functions/move_animation.js'
 import res from '../functions/res.js'
 import Tag from './Tag.js'
 
@@ -11,13 +14,17 @@ class Item {
   private readonly fontSize: number
   private x = 0
   private y = 0
+  private rawX = 0
+  private rawY = 0
 
-  // Change the position of an specific axis
-  private move( pixels:number, axis:Axis ) {
-    pixels = res( pixels )  // Pixels conversion
-    // Moving
-    if( axis === Axis.X ) { this.x += pixels }
-    else if( axis === Axis.Y ) { this.y += pixels }
+  // Change the position (saving reference resolution)
+  public setPosition( x:number, y:number ) {
+    // Saving reference
+    this.rawX = x
+    this.rawY = y
+    // Saving real resolution (canvas)
+    this.x = res( this.rawX )
+    this.y = res( this.rawY )
   }
 
   constructor(
@@ -32,8 +39,33 @@ class Item {
     this.radius = res( size / 5 )
     this.fontSize = res( size / 2.23 )
     // Setting coordinates
-    this.move( initX, Axis.X )
-    this.move( initY, Axis.Y )
+    this.setPosition( initX, initY )
+  }
+
+  // Make an animated move to the specified direction
+  public async moveTo( pixels:number, direction:Direction, board:Board ) {
+    board.pause()  // Avoiding board interaction
+    if( direction === Direction.UP ) {
+      await moveAnimation( pixels * -1, Axis.Y, this )
+    }
+    else if( direction === Direction.LEFT ) {
+      await moveAnimation( pixels * -1, Axis.X, this )
+    }
+    else if( direction === Direction.RIGHT ) {
+      await moveAnimation( pixels, Axis.X, this )
+    }
+    else if( direction === Direction.DOWN ) {
+      await moveAnimation( pixels, Axis.Y, this )
+    }
+    board.play()  // Allowing board interaction again
+  }
+
+  get refX(): number {
+    return this.rawX
+  }
+
+  get refY(): number {
+    return this.rawY
   }
 
   // Build the background of the item

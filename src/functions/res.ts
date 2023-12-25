@@ -1,5 +1,10 @@
-const REFERENCE = 1000,
-  RES = 1440  // Screen resolution
+import { REFERENCE, RES } from '../data/constants.js' 
+
+// Calc the reference value for this resolution
+function parseResToRef( res:number, maxRes:number ): number {
+  const result: number = res / maxRes * REFERENCE
+  return Math.round( result )
+}
 
 // Calc the true resolution based on the reference
 function res( part:number ): number {
@@ -8,3 +13,4 @@ function res( part:number ): number {
 }
 
 export default res
+export { parseResToRef }
