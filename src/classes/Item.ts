@@ -60,6 +60,26 @@ class Item {
     board.play()  // Allowing board interaction again
   }
 
+  // Shake thew item
+  // Makes many movements in the specified directions and then come back to simulate shaking
+  public async shake( duration:number, pixels:number, movements:Direction[], board:Board ) {
+    board.pause()  // Avoiding board interaction
+    const moveTime: number = Math.floor( duration / movements.length )
+    // Making moves
+    for( const move of movements ) {
+      // Setting direction of the move (and how to come back)
+      let goDirection: number
+      if( move === Direction.RIGHT ) { goDirection = pixels }
+      else if( move === Direction.LEFT ) { goDirection = pixels * -1 }
+      else { throw( 'Invalid direction value' ) }  // Exception when another direction (Up or Down) is specified
+      const comeBackDirection: number = goDirection * -1
+      // Moving
+      await moveAnimation( goDirection, Axis.X, this, moveTime )  // Go
+      await moveAnimation( comeBackDirection, Axis.X, this, moveTime )  // Come back
+    }
+    board.play()  // Allowing board interaction again
+  }
+
   get refX(): number {
     return this.rawX
   }

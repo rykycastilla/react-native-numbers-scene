@@ -94,7 +94,14 @@ class Board {
     const item: Item | null = this.detectItem( x, y )
     if( item ) {
       const direction: Direction | null = this.checkAdjacentBlankSpace( item )
-      item.moveTo( this.PIXELS_TO_NEXT_ITEM, direction, this )
+      if( !direction ) {
+        // Feedback if it is surrounded
+        const movements: Direction[] = [ Direction.RIGHT, Direction.LEFT, Direction.RIGHT, Direction.LEFT ]
+        item.shake( 160, 6, movements, this )
+      }
+      else {
+        item.moveTo( this.PIXELS_TO_NEXT_ITEM, direction, this )
+      }
     }
   }
   
